@@ -2,28 +2,30 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
 
+const asset = path => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+
 const projects = [
-  { id:'01', name:'KS EVO', cn:'赛车模拟器概念设计', type:'SIM RACING / HMI', year:'2026', image:'/visual/project-ks-evo.png', pages:[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19], color:'#ff5435', note:'将触控、显示与人机工学控制区整合进专业赛车方向盘，在高速状态下保持信息与操作的绝对清晰。', tags:['RESEARCH','ERGONOMICS','CMF'] },
-  { id:'02', name:'ASAR', cn:'防晕 AR 眼镜', type:'WEARABLE / HEALTH', year:'2025', image:'/visual/asar-original.jpg', pages:[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34], color:'#98a99f', note:'以视觉补偿、前庭调节与嗅觉干预建立多感官协同体验，让高频出行回归舒适。', tags:['INSIGHT','WEARABLE','TECH'] },
-  { id:'03', name:'VCRE', cn:'脊柱矫正康复外骨骼', type:'MEDICAL / EXOSKELETON', year:'2025', image:'/visual/project-vcre.png', pages:[35,36,37,38,39,40,41,42], color:'#5b6b78', note:'在医疗级矫正与日常化康复之间寻找平衡，用模块化支撑回应真实的穿戴与康复场景。', tags:['MEDICAL','MODULAR','HUMAN FACTOR'] },
-  { id:'04', name:'ALECS', cn:'无人月表勘探采集车', type:'MOBILITY / SPACE', year:'2025', image:'/visual/project-alecs.png', pages:[43,44,45,46,47,48,49,50,51,52], color:'#b9b9b2', note:'面向月表资源探测与采样任务，用高机动悬架、感知单元和机械臂构成完整任务闭环。', tags:['MOBILITY','SYSTEM','SPACE'] }
+  { id:'01', name:'KS EVO', cn:'赛车模拟器概念设计', type:'SIM RACING / HMI', year:'2026', image:asset('/visual/project-ks-evo.png'), pages:[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19], color:'#ff5435', note:'将触控、显示与人机工学控制区整合进专业赛车方向盘，在高速状态下保持信息与操作的绝对清晰。', tags:['RESEARCH','ERGONOMICS','CMF'] },
+  { id:'02', name:'ASAR', cn:'防晕 AR 眼镜', type:'WEARABLE / HEALTH', year:'2025', image:asset('/visual/asar-original.jpg'), pages:[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34], color:'#98a99f', note:'以视觉补偿、前庭调节与嗅觉干预建立多感官协同体验，让高频出行回归舒适。', tags:['INSIGHT','WEARABLE','TECH'] },
+  { id:'03', name:'VCRE', cn:'脊柱矫正康复外骨骼', type:'MEDICAL / EXOSKELETON', year:'2025', image:asset('/visual/project-vcre.png'), pages:[35,36,37,38,39,40,41,42], color:'#5b6b78', note:'在医疗级矫正与日常化康复之间寻找平衡，用模块化支撑回应真实的穿戴与康复场景。', tags:['MEDICAL','MODULAR','HUMAN FACTOR'] },
+  { id:'04', name:'ALECS', cn:'无人月表勘探采集车', type:'MOBILITY / SPACE', year:'2025', image:asset('/visual/project-alecs.png'), pages:[43,44,45,46,47,48,49,50,51,52], color:'#b9b9b2', note:'面向月表资源探测与采样任务，用高机动悬架、感知单元和机械臂构成完整任务闭环。', tags:['MOBILITY','SYSTEM','SPACE'] }
 ]
 
-const pageSrc = number => `/portfolio/pages/p-${String(number).padStart(2,'0')}.jpg`
+const pageSrc = number => asset(`/portfolio/pages/p-${String(number).padStart(2,'0')}.jpg`)
 const archivePages = [54,55,56,57,58,59,60]
 const archiveLabels = ['录取通知书设计','品牌标志设计','广告视觉设计','机械臂造型设计','产品渲染练习','概念车设计','手绘练习']
 const stripPages = Array.from({length:61},(_,index)=>index+1)
 const indexProjects = [
-  ...projects.map((project,index)=>({...project,indexImage:['/visual/index-ks.png','/visual/index-asar.png','/visual/index-vcre.png','/visual/index-alecs.png'][index],target:`#case-${project.id}`})),
-  {id:'05',name:'GRAPHIC & ARCHIVE',cn:'平面设计 & 作品合辑',type:'VISUAL / ARCHIVE',indexImage:'/visual/index-archive.png',target:'#archive'}
+  ...projects.map((project,index)=>({...project,indexImage:['/visual/index-ks.png','/visual/index-asar.png','/visual/index-vcre.png','/visual/index-alecs.png'].map(asset)[index],target:`#case-${project.id}`})),
+  {id:'05',name:'GRAPHIC & ARCHIVE',cn:'平面设计 & 作品合辑',type:'VISUAL / ARCHIVE',indexImage:asset('/visual/index-archive.png'),target:'#archive'}
 ]
 const awardItems = [
   '入围 2026 德国 iF 设计奖','美国 MUSE 设计奖银奖 ×2','美国好设计铜奖','旺旺时报金犊奖 · MSI 微星科技创作大赛优秀奖','入围 QQ 音乐车载音乐控件大赛','第19届中国好创意暨全国数字艺术设计大赛：省一等奖 ×1 / 省二等奖 ×2','第13届未来设计师暨全国高校数字艺术设计大赛：省二等奖 ×1 / 三等奖 ×3','第七届全国大学生工业设计大赛省三等奖','第八届全国大学生工业设计大赛：省二等奖 ×2 / 省三等奖 ×3','第八届上海广协 CMBA 神笔奖铜奖','第十届两岸新锐设计竞赛·华灿奖省一等奖','华夏奖文化艺术设计大赛：金奖 ×1 / 银奖 ×3 / 铜奖 ×2','第六届 SGADC 新加坡金沙艺术设计大赛铜奖 ×2','大学生视觉艺术设计大赛：国二等奖 ×1 / 省二等奖 ×2','西安工业大学录取通知书设计大赛一等奖'
 ]
 const toolItems = [
-  {name:'Photoshop',icon:'/tools/photoshop.svg'},{name:'Illustrator',icon:'/tools/illustrator.svg'},{name:'KeyShot',icon:'/tools/keyshot.png'},
-  {name:'Rhino',icon:'/tools/rhino.svg'},{name:'SD ComfyUI',icon:'/tools/comfyui.svg'},{name:'Premiere Pro',icon:'/tools/premiere.svg'},
-  {name:'After Effects',icon:'/tools/after-effects.svg'},{name:'SolidWorks',icon:'/tools/solidworks.png'},{name:'Figma',icon:'/tools/figma.svg'}
+  {name:'Photoshop',icon:asset('/tools/photoshop.svg')},{name:'Illustrator',icon:asset('/tools/illustrator.svg')},{name:'KeyShot',icon:asset('/tools/keyshot.png')},
+  {name:'Rhino',icon:asset('/tools/rhino.svg')},{name:'SD ComfyUI',icon:asset('/tools/comfyui.svg')},{name:'Premiere Pro',icon:asset('/tools/premiere.svg')},
+  {name:'After Effects',icon:asset('/tools/after-effects.svg')},{name:'SolidWorks',icon:asset('/tools/solidworks.png')},{name:'Figma',icon:asset('/tools/figma.svg')}
 ]
 
 const Arrow = () => <span className="arrow" aria-hidden="true">↗</span>
@@ -132,7 +134,7 @@ function App(){
       <div className="heroNoise" aria-hidden="true"/>
       <div className="heroAura" aria-hidden="true"/>
       <div className="coverFrame" aria-hidden="true">
-        <img src="/visual/cover-original.jpg" alt=""/>
+        <img src={asset('/visual/cover-original.jpg')} alt=""/>
         <div className="lightSweep"/>
       </div>
       <div className="heroMeta shell"><span>PORTFOLIO / 2026<small>谷嘉乐的个人设计小站</small></span><span>PRODUCT · FORM · EXPERIENCE</span></div>
@@ -155,7 +157,7 @@ function App(){
       <div className="sectionCode" data-reveal><span>02</span> / PROFILE</div>
       <div className="aboutGrid">
         <div className="aboutImage" data-reveal>
-          <img src="/portfolio/portrait-20260703.png" alt="谷嘉乐个人肖像"/>
+          <img src={asset('/portfolio/portrait-20260703.png')} alt="谷嘉乐个人肖像"/>
           <div className="portraitType" aria-hidden="true">
             <span className="portraitMark">GJL / ID DESIGNER</span>
             <span className="portraitPlace">XI'AN · CN</span>
