@@ -124,8 +124,9 @@
 
 /* Authentic local software marks and bilingual navigation. */
 .numbers .toolIcon{padding:5px;border-color:#ffffff25;background:#17191d;color:#fff}.numbers .toolIcon img{display:block;width:100%;height:100%;object-fit:contain}.toolGrid>div:nth-child(4) .toolIcon,.toolGrid>div:nth-child(8) .toolIcon{background:#f3f3f1}.toolGrid>div:hover .toolIcon{box-shadow:0 14px 30px #000c,0 0 25px #8195ff35}
+.numbers .statCard{cursor:pointer}.numbers .statLabel{display:flex;align-items:baseline;gap:12px;color:inherit;font:inherit;letter-spacing:0}.numbers .statLabel strong{color:#e7eae7;font:400 15px/1 "PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.08em;transition:color .35s}.numbers .statLabel small{color:#626a67;font:500 7px/1 Space Grotesk;letter-spacing:.16em}.statCard>.statHint{display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #7c90ff4f;border-radius:30px;background:#6f84ff0d;color:#91a2ff;font:400 10px/1 "PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.08em;opacity:.88;transform:none}.statCard>.statHint em{font:400 11px/1 Space Grotesk;font-style:normal;transition:transform .35s}.statCard:hover>.statHint,.statCard:focus-within>.statHint{opacity:1;background:#768bff1a}.statCard:hover>.statHint em,.statCard:focus-within>.statHint em{transform:translate(2px,-2px)}.statCard:hover>.statLabel strong,.statCard:focus-within>.statLabel strong{color:#91a2ff}
 .nav button{display:flex;align-items:baseline;gap:8px}.nav button>span{font:inherit}.nav button>small{color:#707673;font:400 8px/1 "PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.08em;transition:color .35s}.nav button:hover>small,.nav button:focus-visible>small{color:#9aacff}
-@media(max-width:720px){.nav button{justify-content:space-between}.nav button>small{font-size:10px}}
+@media(max-width:720px){.nav button{justify-content:space-between}.nav button>small{font-size:10px}.statCard>.statHint{display:flex;right:0;bottom:20px}.numbers .statLabel strong{font-size:14px}}
 
 /* Project covers supplied at their native cinematic ratios. */
 .work .project--01 .projectMedia,.work .project--03 .projectMedia{height:auto;min-height:0;aspect-ratio:16/9}
@@ -139,3 +140,49 @@
 .aboutImage:after{background:linear-gradient(90deg,#050505 0%,#050505a8 7%,#05050538 17%,transparent 28%,transparent 66%,#05050552 84%,#050505 100%),linear-gradient(0deg,#050505 0%,#05050578 8%,transparent 23%,transparent 77%,#05050578 92%,#050505 100%)}
 .aboutImage img{object-position:18% center;-webkit-mask-image:radial-gradient(ellipse 90% 92% at 43% 48%,#000 51%,#000d 68%,transparent 100%);mask-image:radial-gradient(ellipse 90% 92% at 43% 48%,#000 51%,#000d 68%,transparent 100%)}
 .portraitType{position:absolute;z-index:3;inset:0;pointer-events:none;color:#dce5ff;font:500 7px/1 Space Grotesk;letter-spacing:.22em;text-transform:uppercase}.portraitType span{position:absolute;text-shadow:0 1px 10px #02050aaa}.portraitMark{top:24px;left:24px}.portraitWords{top:24px;right:18px;writing-mode:vertical-rl}.portraitPlace{left:24px;bottom:23px}.portraitYear{right:20px;bottom:23px;color:#7890ff}.portraitType:after{content:"";position:absolute;left:24px;right:54px;bottom:42px;height:1px;background:linear-gradient(90deg,#b8c8ff80,transparent)}
+
+/* Mobile-first refinement: compact, touch-safe and free of horizontal overflow. */
+@media(max-width:720px){
+  :root{--shell:calc(100vw - 28px)}
+  html{scroll-padding-top:68px;-webkit-text-size-adjust:100%}
+  body{overscroll-behavior-x:none}
+  img{max-width:100%}
+  button,a{-webkit-tap-highlight-color:transparent}
+  .topbar{height:68px;padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}.logo b{font-size:22px}.menu{min-width:48px;min-height:44px}
+  .nav{position:fixed;top:68px;left:0;right:0;gap:0;padding:14px 16px 24px;border-bottom:1px solid #ffffff24;background:#070807f5;backdrop-filter:blur(18px)}
+  .nav button{min-height:58px;padding:0 4px;border-bottom:1px solid #ffffff18;font-size:11px}.nav button::after{display:none}
+  .hero{height:100svh;min-height:640px}.heroMeta{top:87px}.heroMeta small{max-width:170px;line-height:1.45}
+  .coverFrame{top:48%;width:calc(100vw - 28px);height:54svh;max-height:520px}.heroTitle{top:55%;width:100%}
+  .heroTitle h1{font-size:clamp(56px,17vw,70px);line-height:.84;letter-spacing:-.075em}.heroFoot{bottom:17px;padding-top:15px}.heroFoot button{min-height:40px}
+  .heroAura{width:130vw;height:130vw}
+  .statement{height:auto;padding:105px 0 110px}.statementSticky{position:relative;top:auto;height:auto;min-height:0;padding-top:0;display:block}
+  .statementSticky>.sectionCode{position:static;margin-bottom:46px}.statementSticky>p{font-size:clamp(43px,13vw,58px);line-height:.91}
+  .statementCopy{position:static;display:grid;grid-template-columns:1fr;gap:12px;width:100%;margin-top:44px;padding-top:16px}.statementCopy p{font-size:12px}
+  .about{padding:96px 0}.aboutGrid{gap:46px;margin-top:42px}.aboutImage{width:100%;aspect-ratio:4/5}.aboutBody .micro{margin-bottom:28px}
+  .aboutBody h2{font-size:clamp(39px,11.7vw,50px);line-height:1.12}.aboutIntro{margin:28px 0 42px;font-size:12px;line-height:1.8}
+  .career .careerItem{grid-template-columns:54px minmax(0,1fr) 28px;padding:16px 0}.career p{min-width:0;font-size:11px;line-height:1.55}.careerPopover{font-size:11px}
+  .numbers{margin-top:64px}.numbers .statCard{min-height:132px}.numbers b{font-size:47px}
+  .statPopover,.statProjects .statPopover,.statTools .statPopover{left:12px;right:12px;bottom:12px;max-height:76svh;padding:22px 18px}.toolGrid{grid-template-columns:1fr 1fr;gap:14px 10px}.numbers .toolIcon{width:40px;height:40px}
+  .portfolioIndex{padding:92px 0 100px}.indexTop{margin-bottom:30px}.indexTop>p{font-size:8px}
+  .indexGallery{display:flex;height:470px;gap:10px;overflow-x:auto;overflow-y:hidden;border:0;scroll-snap-type:x mandatory;scroll-padding-left:0;overscroll-behavior-x:contain;scrollbar-width:none}
+  .indexGallery::-webkit-scrollbar{display:none}.indexCard,.indexCard:last-child{flex:0 0 82vw;min-height:470px;border:1px solid #ffffff24;scroll-snap-align:start}
+  .indexGallery:hover .indexCard,.indexGallery .indexCard:hover,.indexGallery .indexCard:focus-visible{flex-basis:82vw;filter:none}
+  .indexCard img,.indexCard:nth-child(2) img,.indexCard:nth-child(3) img,.indexCard:nth-child(4) img,.indexCard:nth-child(5) img{width:142%;height:112%;top:49%}
+  .indexLabel{left:18px;bottom:20px}.indexNumber{left:18px;top:18px}.indexCard>.arrow{right:17px;bottom:20px}
+  .folioStrip{padding-bottom:70px}.folioStripHead{padding-bottom:18px}.folioStripHead output{display:none}.folioViewport{margin-inline:-14px;padding:16px 14px 22px;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .folioTrack figure{width:200px}.folioTrack figcaption{width:25px;height:25px}
+  .ticker{padding:22px 0}.ticker div{font-size:13px}
+  .workHead{padding:92px 0 72px}.workHead h2{margin-top:54px;font-size:17vw}.project{padding-bottom:72px}
+  .work .projectMedia,.work .project--01 .projectMedia,.work .project--02 .projectMedia,.work .project--03 .projectMedia,.work .project--04 .projectMedia{width:100%;height:auto;min-height:0;aspect-ratio:16/10}
+  .work .project--02 .projectMedia img{object-fit:contain}.projectNo{left:14px;top:14px;width:38px;height:38px}.projectAction{right:14px;bottom:14px;opacity:1;transform:none;font-size:8px}
+  .projectLine{padding-top:18px}.projectLine>div:first-child{gap:16px}.projectLine h3{margin:22px 0 24px;font-size:49px}.projectText b{font-size:13px}.projectText p{font-size:11px;line-height:1.75}
+  .archive{padding:94px 0}.archiveHead{margin-bottom:42px}.archiveGrid{gap:34px}.archiveGrid figcaption{font-size:8px}
+  .contactInner{min-height:100svh;padding:86px 0 calc(24px + env(safe-area-inset-bottom))}.contactInner h2{font-size:17vw;line-height:.8}.contactInner>a{margin:48px 0 58px;min-height:45px;align-items:center;font-size:9px}
+  .contactMeta{grid-template-columns:1fr;gap:13px;padding-top:18px;line-height:1.5}.contactMeta span{overflow-wrap:anywhere}.contactMeta button{min-height:40px;text-align:left}
+  .modalClose{right:12px;top:12px;padding:11px 12px}.modalHead{padding:90px 0 36px}.modalHead h2{font-size:18vw}.modalHead>p{font-size:11px}.modalHero{width:100%}
+  .modalInfo,.modal .modalInfo{gap:24px;padding:36px 0 54px}.modalInfo>p{font-size:13px}.casePages{gap:12px;margin-bottom:62px}.modalDetail{margin-bottom:62px}
+  .contactCardLayer{padding:12px}.contactCard{max-height:calc(100svh - 24px);overflow-y:auto;padding:34px 20px 24px}.contactCard h2{margin:48px 0 36px}
+  .contactCardRows a,.contactCardRows p{grid-template-columns:64px minmax(0,1fr) auto;min-height:58px}.contactCardRows b{overflow-wrap:anywhere}
+}
+@media(max-width:430px){.indexCard,.indexCard:last-child{flex-basis:86vw}.indexGallery:hover .indexCard,.indexGallery .indexCard:hover,.indexGallery .indexCard:focus-visible{flex-basis:86vw}}
+@media(pointer:coarse){.hero .heroTitle,.hero .coverFrame{transform:translate(-50%,-50%)}.lightSweep,.work .projectMedia::after{display:none}.projectMedia:hover img{transform:none;filter:none}.floatingTop{right:calc(14px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom))}}

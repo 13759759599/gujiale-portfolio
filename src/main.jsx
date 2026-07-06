@@ -37,6 +37,8 @@ function AutoFolioStrip(){
   useEffect(()=>{
     const track = trackRef.current
     if(!track || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const compact = window.matchMedia('(max-width: 720px)').matches
+    targetSpeed.current = compact ? .14 : .34
     let frame
     let x = 0
     let speed = .34
@@ -61,7 +63,7 @@ function AutoFolioStrip(){
       <div><span>03.5 / PORTFOLIO FILMSTRIP</span><b>AUTO SCROLL · HOVER TO SLOW</b></div>
       <output>01 / 61</output>
     </div>
-    <div className="folioViewport" data-reveal onPointerEnter={()=>{targetSpeed.current=.075}} onPointerLeave={()=>{targetSpeed.current=.34}}>
+    <div className="folioViewport" data-reveal onPointerEnter={()=>{targetSpeed.current=.075}} onPointerLeave={()=>{targetSpeed.current=window.matchMedia('(max-width: 720px)').matches?.14:.34}}>
       <div className="folioTrack" ref={trackRef}>
         {[...stripPages,...stripPages].map((page,index)=><figure key={`${page}-${index}`} aria-hidden={index>=stripPages.length}>
           <img src={pageSrc(page)} loading="lazy" alt={index<stripPages.length?`作品集第 ${page} 页`:''}/><figcaption>{String(page).padStart(2,'0')}</figcaption>
@@ -97,10 +99,11 @@ function App(){
       document.documentElement.style.setProperty('--scrollProgress',`${max > 0 ? (window.scrollY / max) * 100 : 0}%`)
       setShowTop(window.scrollY > window.innerHeight * .8)
     }
-    window.addEventListener('pointermove',move)
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches
+    if(!coarsePointer) window.addEventListener('pointermove',move)
     window.addEventListener('scroll',syncScroll,{passive:true})
     syncScroll()
-    return ()=>{ observer.disconnect(); window.removeEventListener('pointermove',move); window.removeEventListener('scroll',syncScroll) }
+    return ()=>{ observer.disconnect(); if(!coarsePointer) window.removeEventListener('pointermove',move); window.removeEventListener('scroll',syncScroll) }
   },[])
 
   useEffect(()=>{
@@ -176,14 +179,14 @@ function App(){
         </div>
       </div>
       <div className="numbers" data-reveal>
-        <div className="statCard statAwards" tabIndex="0"><b>20<sup>+</sup></b><span>DESIGN AWARDS</span><i>HOVER TO EXPLORE</i>
-          <aside className="statPopover awardsPopover"><header><small>AWARD EXPERIENCE</small><strong>所获奖项</strong></header><ol>{awardItems.map((award,index)=><li key={award}><em>{String(index+1).padStart(2,'0')}</em><span>{award}</span></li>)}</ol></aside>
+        <div className="statCard statAwards" tabIndex="0"><b>20<sup>+</sup></b><span className="statLabel"><strong>设计奖项</strong><small>DESIGN AWARDS</small></span><i className="statHint">点击查看 <em>↗</em></i>
+          <aside className="statPopover awardsPopover"><header><small>AWARD EXPERIENCE / 获奖经历</small><strong>所获奖项</strong></header><ol>{awardItems.map((award,index)=><li key={award}><em>{String(index+1).padStart(2,'0')}</em><span>{award}</span></li>)}</ol></aside>
         </div>
-        <div className="statCard statProjects" tabIndex="0"><b>04</b><span>CORE PROJECTS</span><i>HOVER TO EXPLORE</i>
-          <aside className="statPopover projectsPopover"><header><small>SELECTED PROJECTS</small><strong>核心项目 · 04</strong></header><div className="statProjectList">{projects.map(project=><button key={project.id} onClick={()=>go(`#case-${project.id}`)}><em>{project.id}</em><span><b>{project.name}</b><small>{project.cn}</small></span><Arrow/></button>)}</div></aside>
+        <div className="statCard statProjects" tabIndex="0"><b>04</b><span className="statLabel"><strong>核心项目</strong><small>CORE PROJECTS</small></span><i className="statHint">点击查看 <em>↗</em></i>
+          <aside className="statPopover projectsPopover"><header><small>SELECTED PROJECTS / 精选项目</small><strong>核心项目 · 04</strong></header><div className="statProjectList">{projects.map(project=><button key={project.id} onClick={()=>go(`#case-${project.id}`)}><em>{project.id}</em><span><b>{project.name}</b><small>{project.cn}</small></span><Arrow/></button>)}</div></aside>
         </div>
-        <div className="statCard statTools" tabIndex="0"><b>09<sup>+</sup></b><span>DESIGN TOOLS</span><i>HOVER TO EXPLORE</i>
-          <aside className="statPopover toolsPopover"><header><small>DESIGN WORKFLOW</small><strong>工具矩阵 · 09</strong></header><div className="toolGrid">{toolItems.map(tool=><div key={tool.name}><span className="toolIcon"><img src={tool.icon} alt={`${tool.name} 软件图标`}/></span><b>{tool.name}</b></div>)}</div></aside>
+        <div className="statCard statTools" tabIndex="0"><b>09<sup>+</sup></b><span className="statLabel"><strong>设计工具</strong><small>DESIGN TOOLS</small></span><i className="statHint">点击查看 <em>↗</em></i>
+          <aside className="statPopover toolsPopover"><header><small>DESIGN WORKFLOW / 设计流程</small><strong>工具矩阵 · 09</strong></header><div className="toolGrid">{toolItems.map(tool=><div key={tool.name}><span className="toolIcon"><img src={tool.icon} alt={`${tool.name} 软件图标`}/></span><b>{tool.name}</b></div>)}</div></aside>
         </div>
       </div>
     </section>
