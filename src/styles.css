@@ -124,8 +124,9 @@
 
 /* Authentic local software marks and bilingual navigation. */
 .numbers .toolIcon{padding:5px;border-color:#ffffff25;background:#17191d;color:#fff}.numbers .toolIcon img{display:block;width:100%;height:100%;object-fit:contain}.toolGrid>div:nth-child(4) .toolIcon,.toolGrid>div:nth-child(8) .toolIcon{background:#f3f3f1}.toolGrid>div:hover .toolIcon{box-shadow:0 14px 30px #000c,0 0 25px #8195ff35}
+.numbers .statCard{cursor:pointer}.numbers .statLabel{display:flex;align-items:baseline;gap:12px;color:inherit;font:inherit;letter-spacing:0}.numbers .statLabel strong{color:#e7eae7;font:400 15px/1 "PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.08em;transition:color .35s}.numbers .statLabel small{color:#626a67;font:500 7px/1 Space Grotesk;letter-spacing:.16em}.statCard>.statHint{display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid #7c90ff4f;border-radius:30px;background:#6f84ff0d;color:#91a2ff;font:400 10px/1 "PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.08em;opacity:.88;transform:none}.statCard>.statHint em{font:400 11px/1 Space Grotesk;font-style:normal;transition:transform .35s}.statCard:hover>.statHint,.statCard:focus-within>.statHint{opacity:1;background:#768bff1a}.statCard:hover>.statHint em,.statCard:focus-within>.statHint em{transform:translate(2px,-2px)}.statCard:hover>.statLabel strong,.statCard:focus-within>.statLabel strong{color:#91a2ff}
 .nav button{display:flex;align-items:baseline;gap:8px}.nav button>span{font:inherit}.nav button>small{color:#707673;font:400 8px/1 "PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.08em;transition:color .35s}.nav button:hover>small,.nav button:focus-visible>small{color:#9aacff}
-@media(max-width:720px){.nav button{justify-content:space-between}.nav button>small{font-size:10px}}
+@media(max-width:720px){.nav button{justify-content:space-between}.nav button>small{font-size:10px}.statCard>.statHint{display:flex;right:0;bottom:20px}.numbers .statLabel strong{font-size:14px}}
 
 /* Project covers supplied at their native cinematic ratios. */
 .work .project--01 .projectMedia,.work .project--03 .projectMedia{height:auto;min-height:0;aspect-ratio:16/9}
