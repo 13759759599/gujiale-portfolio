@@ -78,6 +78,7 @@ function App(){
   const [menu,setMenu] = useState(false)
   const [showTop,setShowTop] = useState(false)
   const [contactCard,setContactCard] = useState(false)
+  const [activeStat,setActiveStat] = useState(null)
 
   useEffect(()=>{
     const observer = new IntersectionObserver(entries=>entries.forEach(entry=>{
@@ -97,6 +98,17 @@ function App(){
     const syncScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight
       document.documentElement.style.setProperty('--scrollProgress',`${max > 0 ? (window.scrollY / max) * 100 : 0}%`)
+      const viewport = Math.max(window.innerHeight, 1)
+      const heroWipe = Math.min(Math.max(window.scrollY / (viewport * .95), 0), 1)
+      const statement = document.querySelector('#statement')
+      let statementWipe = 0
+      if(statement){
+        const rect = statement.getBoundingClientRect()
+        const travel = Math.max(rect.height - viewport, viewport * .7)
+        statementWipe = Math.min(Math.max((-rect.top) / travel, 0), 1)
+      }
+      document.documentElement.style.setProperty('--hero-wipe', heroWipe.toFixed(3))
+      document.documentElement.style.setProperty('--statement-wipe', statementWipe.toFixed(3))
       setShowTop(window.scrollY > window.innerHeight * .8)
     }
     const coarsePointer = window.matchMedia('(pointer: coarse)').matches
@@ -122,6 +134,14 @@ function App(){
   return <main>
     <div className="scrollProgress" aria-hidden="true"/>
     <div className="cursorGlow" aria-hidden="true"/>
+    <div className="cinemaBoot" aria-hidden="true">
+      <div className="cinemaBootGrid"><span/><span/><span/><span/><span/><span/><span/><span/><span/></div>
+      <div className="cinemaBootText">
+        <span>GJL DESIGN ARCHIVE / SYSTEM START</span>
+        <b>DESIGNING<br/>THE UNSEEN.</b>
+        <span>FORM · FUNCTION · EXPERIENCE</span>
+      </div>
+    </div>
     <button className={showTop?'floatingTop isVisible':'floatingTop'} onClick={()=>go('#top')} aria-label="返回顶部"><span>↑</span><small>TOP</small></button>
     <header className="topbar shell">
       <button className="logo" onClick={()=>setContactCard(true)} aria-label="查看谷嘉乐的联系方式"><b>GJL</b><span>谷嘉乐<br/>INDUSTRIAL DESIGNER</span></button>
@@ -179,13 +199,13 @@ function App(){
         </div>
       </div>
       <div className="numbers" data-reveal>
-        <div className="statCard statAwards" tabIndex="0"><b>20<sup>+</sup></b><span className="statLabel"><strong>设计奖项</strong><small>DESIGN AWARDS</small></span><i className="statHint">点击查看 <em>↗</em></i>
+        <div className={activeStat==='awards'?'statCard statAwards isOpen':'statCard statAwards'} data-stat="awards" tabIndex="0" onPointerEnter={()=>setActiveStat('awards')} onPointerLeave={()=>setActiveStat(null)} onFocus={()=>setActiveStat('awards')} onBlur={()=>setActiveStat(null)}><b>20<sup>+</sup></b><span className="statLabel"><strong>设计奖项</strong><small>DESIGN AWARDS</small></span><i className="statHint">点击查看 <em>↗</em></i>
           <aside className="statPopover awardsPopover"><header><small>AWARD EXPERIENCE / 获奖经历</small><strong>所获奖项</strong></header><ol>{awardItems.map((award,index)=><li key={award}><em>{String(index+1).padStart(2,'0')}</em><span>{award}</span></li>)}</ol></aside>
         </div>
-        <div className="statCard statProjects" tabIndex="0"><b>04</b><span className="statLabel"><strong>核心项目</strong><small>CORE PROJECTS</small></span><i className="statHint">点击查看 <em>↗</em></i>
+        <div className={activeStat==='projects'?'statCard statProjects isOpen':'statCard statProjects'} data-stat="projects" tabIndex="0" onPointerEnter={()=>setActiveStat('projects')} onPointerLeave={()=>setActiveStat(null)} onFocus={()=>setActiveStat('projects')} onBlur={()=>setActiveStat(null)}><b>04</b><span className="statLabel"><strong>核心项目</strong><small>CORE PROJECTS</small></span><i className="statHint">点击查看 <em>↗</em></i>
           <aside className="statPopover projectsPopover"><header><small>SELECTED PROJECTS / 精选项目</small><strong>核心项目 · 04</strong></header><div className="statProjectList">{projects.map(project=><button key={project.id} onClick={()=>go(`#case-${project.id}`)}><em>{project.id}</em><span><b>{project.name}</b><small>{project.cn}</small></span><Arrow/></button>)}</div></aside>
         </div>
-        <div className="statCard statTools" tabIndex="0"><b>09<sup>+</sup></b><span className="statLabel"><strong>设计工具</strong><small>DESIGN TOOLS</small></span><i className="statHint">点击查看 <em>↗</em></i>
+        <div className={activeStat==='tools'?'statCard statTools isOpen':'statCard statTools'} data-stat="tools" tabIndex="0" onPointerEnter={()=>setActiveStat('tools')} onPointerLeave={()=>setActiveStat(null)} onFocus={()=>setActiveStat('tools')} onBlur={()=>setActiveStat(null)}><b>09<sup>+</sup></b><span className="statLabel"><strong>设计工具</strong><small>DESIGN TOOLS</small></span><i className="statHint">点击查看 <em>↗</em></i>
           <aside className="statPopover toolsPopover"><header><small>DESIGN WORKFLOW / 设计流程</small><strong>工具矩阵 · 09</strong></header><div className="toolGrid">{toolItems.map(tool=><div key={tool.name}><span className="toolIcon"><img src={tool.icon} alt={`${tool.name} 软件图标`}/></span><b>{tool.name}</b></div>)}</div></aside>
         </div>
       </div>
