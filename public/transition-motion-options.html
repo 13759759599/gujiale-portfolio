@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>前两页转场动效小样</title>
+  <style>
+    :root{--bg:#050505;--ink:#f1f3f6;--muted:#8b929b;--blue:#7890ff;--line:rgba(255,255,255,.14)}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 50% 0,#10224a 0,transparent 34%),#050505;color:var(--ink);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+    header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:24px 34px;border-bottom:1px solid var(--line);background:rgba(5,5,5,.82);backdrop-filter:blur(18px)}
+    h1{margin:0;font:500 clamp(22px,3vw,42px)/1 "Space Grotesk",Inter,sans-serif;letter-spacing:-.04em}
+    header p{margin:8px 0 0;color:var(--muted);font-size:13px}
+    .hint{color:#9fb0ff;font:600 11px/1.5 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;padding:28px 34px 54px}
+    .card{--p:0;position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#0b0d12,#050505);overflow:hidden}
+    .cardHead{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 14px;border-bottom:1px solid var(--line)}
+    .cardHead b{font:500 18px/1 "Space Grotesk",Inter,sans-serif;letter-spacing:-.03em}
+    .cardHead span{color:#7e8fff;font:600 11px/1 ui-monospace,monospace}
+    .viewport{position:relative;height:430px;overflow:hidden;background:#020305;isolation:isolate}
+    .hero,.approach{position:absolute;inset:0;overflow:hidden}
+    .hero{z-index:2;background:#07111a}
+    .approach{z-index:1;display:grid;align-content:center;padding:52px;background:#050505}
+    .cover{position:absolute;inset:16% 12% 12% 22%;background:#050505;overflow:hidden;box-shadow:0 40px 120px #000}
+    .cover img{width:100%;height:100%;object-fit:cover;filter:contrast(1.12) saturate(.84) brightness(.78);transform:scale(1.08)}
+    .heroMeta,.heroFoot{position:absolute;left:22px;right:22px;display:flex;justify-content:space-between;color:#a5adba;font:600 9px/1.4 ui-monospace,monospace;letter-spacing:.14em}
+    .heroMeta{top:22px}.heroFoot{bottom:20px;border-top:1px solid #ffffff24;padding-top:14px}
+    .heroCopy{position:absolute;z-index:3;left:22px;top:38%;width:86%}
+    .heroCopy small{display:block;margin-bottom:42px;color:#aab0b8;font-size:12px;line-height:1.8}
+    .heroCopy strong{display:block;font:500 clamp(58px,7.4vw,100px)/.74 "Space Grotesk",Inter,sans-serif;letter-spacing:-.085em}
+    .heroCopy strong:last-child{padding-left:12%;color:#e8efff}
+    .dot{color:var(--blue)}
+    .approach small{color:#7e8fff;font:700 10px/1 ui-monospace,monospace;letter-spacing:.18em}
+    .approach h2{margin:32px 0 0;font:500 clamp(50px,6.8vw,88px)/.85 "Space Grotesk",Inter,sans-serif;letter-spacing:-.07em}
+    .approach i{color:#69717d;font-style:normal;font-weight:300}.approach em{color:#7890ff;font-style:normal}
+    .approach p{position:absolute;right:34px;bottom:34px;width:260px;margin:0;padding-top:14px;border-top:1px solid #ffffff24;color:#b4bac4;font-size:12px;line-height:1.8}
+    .controls{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:15px 18px 18px}
+    input[type=range]{width:100%;accent-color:#7890ff}
+    button{border:1px solid #ffffff22;background:#111722;color:#dce4ff;border-radius:999px;padding:8px 13px;font:600 11px/1 ui-monospace,monospace;letter-spacing:.08em;cursor:pointer}
+
+    .v1 .hero{clip-path:circle(calc(142% - var(--p)*120%) at 50% 48%);filter:blur(calc(var(--p)*4px));transform:scale(calc(1 + var(--p)*.04))}
+    .v1 .approach{transform:scale(calc(.96 + var(--p)*.04));opacity:calc(.2 + var(--p)*.8)}
+    .v1 .cover:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 26%,rgba(0,0,0,calc(var(--p)*.85)) 72%)}
+
+    .v2 .hero{transform:translateY(calc(var(--p)*-102%));filter:brightness(calc(1 - var(--p)*.32))}
+    .v2 .approach{transform:translateY(calc((1 - var(--p))*46%));opacity:calc(.15 + var(--p)*.85)}
+    .v2 .viewport:after{content:"";position:absolute;z-index:4;inset:0;background:repeating-linear-gradient(180deg,transparent 0 38px,rgba(120,144,255,.18) 39px,transparent 42px);transform:translateY(calc(var(--p)*-46px));opacity:calc(var(--p)*.9);pointer-events:none}
+
+    .v3 .hero{transform:perspective(900px) rotateX(calc(var(--p)*-10deg)) translateY(calc(var(--p)*-26%)) scale(calc(1 - var(--p)*.08));opacity:calc(1 - var(--p)*.45);transform-origin:center top}
+    .v3 .cover{transform:translateY(calc(var(--p)*70px)) scale(calc(1 + var(--p)*.09));filter:blur(calc(var(--p)*3px))}
+    .v3 .approach{transform:translateY(calc((1 - var(--p))*34%)) scale(calc(.92 + var(--p)*.08));opacity:var(--p)}
+
+    .v4 .hero{clip-path:polygon(0 0,100% 0,100% calc(100% - var(--p)*100%),0 calc(100% - var(--p)*72%));filter:blur(calc(var(--p)*7px)) contrast(calc(1 + var(--p)*.18))}
+    .v4 .heroCopy{transform:translateX(calc(var(--p)*-80px));opacity:calc(1 - var(--p)*.75)}
+    .v4 .approach{transform:translateY(calc((1 - var(--p))*18%));opacity:calc(.1 + var(--p)*.9)}
+    .v4 .viewport:before{content:"";position:absolute;z-index:5;left:-20%;right:-20%;top:calc(var(--p)*86%);height:90px;background:linear-gradient(180deg,transparent,#7890ff2c,transparent);filter:blur(16px);pointer-events:none}
+
+    .v5 .hero{transform:translateX(calc(var(--p)*-86%)) rotate(calc(var(--p)*-3deg)) scale(calc(1 - var(--p)*.08));box-shadow:40px 0 120px #000;filter:brightness(calc(1 - var(--p)*.24))}
+    .v5 .approach{transform:translateX(calc((1 - var(--p))*42%)) scale(calc(.94 + var(--p)*.06));opacity:calc(.25 + var(--p)*.75)}
+    .v5 .heroCopy strong:first-of-type{transform:translateX(calc(var(--p)*-50px))}.v5 .heroCopy strong:last-child{transform:translateX(calc(var(--p)*70px))}
+
+    .v6 .hero{opacity:calc(1 - var(--p)*.64);filter:blur(calc(var(--p)*5px));transform:scale(calc(1 + var(--p)*.035))}
+    .v6 .heroCopy strong{clip-path:inset(0 calc(var(--p)*100%) 0 0);filter:blur(calc(var(--p)*2px))}
+    .v6 .approach{opacity:var(--p)}
+    .v6 .approach h2{clip-path:inset(0 0 0 calc((1 - var(--p))*100%));transform:translateX(calc((1 - var(--p))*-44px))}
+    .v6 .approach p{transform:translateX(calc((1 - var(--p))*64px));opacity:var(--p)}
+
+    @media(max-width:900px){.grid{grid-template-columns:1fr;padding:18px}.viewport{height:390px}header{padding:20px 18px}.heroCopy strong{font-size:58px}.approach h2{font-size:52px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>前两页划走动效小样</h1>
+      <p>拖动每张卡片下方的进度条，模拟从首页滑到第二页的过程。选你喜欢的编号，我再合进正式网站。</p>
+    </div>
+    <span class="hint">Motion Studies · 01—06</span>
+  </header>
+  <main class="grid">
+    <section class="card v1" style="--p:.45"><div class="cardHead"><b>01 / 光圈收束</b><span>IRIS FADE</span></div></section>
+    <section class="card v2" style="--p:.45"><div class="cardHead"><b>02 / 垂直胶片</b><span>FILM SLIDE</span></div></section>
+    <section class="card v3" style="--p:.45"><div class="cardHead"><b>03 / 透视后撤</b><span>LENS PULL</span></div></section>
+    <section class="card v4" style="--p:.45"><div class="cardHead"><b>04 / 光带擦屏</b><span>LIGHT WIPE</span></div></section>
+    <section class="card v5" style="--p:.45"><div class="cardHead"><b>05 / 横向换片</b><span>SIDE CUT</span></div></section>
+    <section class="card v6" style="--p:.45"><div class="cardHead"><b>06 / 字幕显影</b><span>TYPE REVEAL</span></div></section>
+  </main>
+  <template id="demo">
+    <div class="viewport">
+      <div class="approach">
+        <small>01 / APPROACH</small>
+        <h2>BETWEEN <i>HUMAN</i><br/>AND <i>TECHNOLOGY,</i><br/>I DESIGN THE<br/><em>INTERACTION.</em></h2>
+        <p>从人的真实行为出发，把技术、工程与情绪价值压缩进一个克制而准确的产品形态。</p>
+      </div>
+      <div class="hero">
+        <div class="cover"><img src="/visual/cover-original.jpg" alt=""></div>
+        <div class="heroMeta"><span>PORTFOLIO / 2026</span><span>PRODUCT · FORM · EXPERIENCE</span></div>
+        <div class="heroCopy"><small>产品设计不是描摹未来，<br/>而是让未知拥有形状。</small><strong>DESIGNING</strong><strong>THE UNSEEN<span class="dot">.</span></strong></div>
+        <div class="heroFoot"><span>GU JIALE / 谷嘉乐</span><span>SCROLL TO EXPLORE ↓</span><span>XI'AN · CN</span></div>
+      </div>
+    </div>
+    <div class="controls"><input type="range" min="0" max="100" value="45"><button type="button">AUTO</button></div>
+  </template>
+  <script>
+    const tpl=document.querySelector('#demo')
+    document.querySelectorAll('.card').forEach(card=>{
+      card.append(tpl.content.cloneNode(true))
+      const range=card.querySelector('input')
+      const btn=card.querySelector('button')
+      let raf=null,dir=1,value=45
+      const set=v=>{value=Math.max(0,Math.min(100,v));range.value=value;card.style.setProperty('--p',(value/100).toFixed(3))}
+      range.addEventListener('input',()=>set(+range.value))
+      btn.addEventListener('click',()=>{
+        if(raf){cancelAnimationFrame(raf);raf=null;btn.textContent='AUTO';return}
+        btn.textContent='STOP'
+        const tick=()=>{value+=dir*.52;if(value>=100||value<=0)dir*=-1;set(value);raf=requestAnimationFrame(tick)}
+        tick()
+      })
+    })
+  </script>
+</body>
+</html>
