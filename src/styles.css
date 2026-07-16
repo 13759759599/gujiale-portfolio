@@ -814,3 +814,42 @@
     margin-top:10px;
   }
 }
+
+/* Visual portfolio switch entry */
+.visualSwitch{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:32px;
+  padding:0 15px;
+  border:1px solid rgba(185,205,255,.34);
+  border-radius:999px;
+  color:#dbe8ff;
+  background:rgba(7,18,31,.22);
+  box-shadow:0 0 0 1px rgba(255,255,255,.035) inset,0 14px 34px rgba(0,0,0,.16);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  font:500 10px/1 "PingFang SC","Microsoft YaHei",Inter,sans-serif;
+  letter-spacing:.12em;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color .35s ease,border-color .35s ease,box-shadow .35s ease,transform .35s ease,background .35s ease;
+}
+.visualSwitch:hover,.visualSwitch:focus-visible{
+  color:#fff;
+  border-color:rgba(126,158,255,.78);
+  background:rgba(27,49,82,.38);
+  box-shadow:0 0 22px rgba(105,139,255,.24),0 0 0 1px rgba(255,255,255,.06) inset;
+  transform:translateY(-1px);
+  outline:none;
+}
+@media(max-width:1100px){
+  .visualSwitch{margin-left:auto;margin-right:2px;min-height:34px;padding:0 13px;font-size:10px;letter-spacing:.08em}
+}
+@media(max-width:720px){
+  .visualSwitch{min-height:38px;padding:0 12px;font-size:10px;letter-spacing:.04em;background:rgba(7,18,31,.48)}
+  .navSide{gap:10px}
+}
+@media(max-width:420px){
+  .visualSwitch{max-width:128px;text-align:center;line-height:1.25;white-space:normal}
+}
